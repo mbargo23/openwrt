@@ -19,6 +19,13 @@ mikrotik,routerboard-sxt-5nd-r2)
 	ucidef_set_led_rssi "rssimediumhigh" "rssimediumhigh" "sxt5n:green:rssimediumhigh" "wlan0" "60" "100"
 	ucidef_set_led_rssi "rssihigh" "rssihigh" "sxt5n:green:rssihigh" "wlan0" "80" "100"
 	;;
+mikrotik,routerboard-rb2011-uias-2hnd)
+        ucidef_set_led_switch "eth6" "ETH6" "rb:green:eth6" "switch1" "0x20"
+        ucidef_set_led_switch "eth7" "ETH7" "rb:green:eth7" "switch1" "0x10"
+        ucidef_set_led_switch "eth8" "ETH8" "rb:green:eth8" "switch1" "0x08"
+        ucidef_set_led_switch "eth9" "ETH9" "rb:green:eth9" "switch1" "0x04"
+        ucidef_set_led_switch "eth10" "ETH10" "rb:green:eth10" "switch1" "0x02"
+        ;;
 esac
 
 board_config_flush

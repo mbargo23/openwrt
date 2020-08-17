@@ -53,3 +53,12 @@ define Device/mikrotik_routerboard-wap-g-5hact2hnd
   SUPPORTED_DEVICES += rb-wapg-5hact2hnd
 endef
 TARGET_DEVICES += mikrotik_routerboard-wap-g-5hact2hnd
+
+define Device/mikrotik_routerboard-rb2011-uias-2hnd
+  $(Device/mikrotik_nand)
+  SOC := ar9344
+  DEVICE_MODEL := RouterBOARD RB2011-UiAS-2HnD
+  DEVICE_PACKAGES += kmod-gpio-beeper
+  SUPPORTED_DEVICES += rb-2011
+endef
+TARGET_DEVICES += mikrotik_routerboard-rb2011-uias-2hnd

@@ -22,6 +22,16 @@ ath79_setup_interfaces()
 	mikrotik,routerboard-wap-g-5hact2hnd)
 		ucidef_set_interface_lan "eth0"
 		;;
+        mikrotik,routerboard-rb2011-uias-2hnd)
+		ucidef_set_interfaces_lan_wan "eth0.1 eth1.1" "eth0.2"
+		ucidef_add_switch "switch0" \
+			"0@eth0" "2:lan" "3:lan" "4:lan" "5:lan" "1:wan" "6:sfp"
+		ucidef_add_switch "switch1" \
+			"0@eth1" "1:lan" "2:lan" "3:lan" "4:lan" "5:lan"
+
+                ;;
+
+
 	*)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		;;
