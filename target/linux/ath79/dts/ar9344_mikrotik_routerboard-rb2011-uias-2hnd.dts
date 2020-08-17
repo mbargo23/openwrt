@@ -68,18 +68,12 @@
 			#size-cells = <1>;
 
 			partition@0 {
-				label = "RouterBoot";
-				reg = <0x0 0x20000>;
+				label = "routerboot";
+				reg = <0x0 0x0>;
 				read-only;
 				compatible = "mikrotik,routerboot-partitions";
 				#address-cells = <1>;
 				#size-cells = <1>;
-
-				partition@0 {
-					label = "bootloader1";
-					reg = <0x0 0x0>;
-					read-only;
-				};
 
 				hard_config: hard_config {
 					read-only;
@@ -87,12 +81,6 @@
 
 				bios {
 					size = <0x1000>;
-					read-only;
-				};
-
-				partition@10000 {
-					label = "bootloader2";
-					reg = <0x10000 0x0>;
 					read-only;
 				};
 
@@ -123,12 +111,12 @@
 
 		partition@40000 {
 			label = "kernel";
-			reg = <0x0040000 0x03c0000>;
+			reg = <0x0040000 0x0400000>;
 		};
 
 		partition@400000 {
 			label = "ubi";
-			reg = <0x0400000 0x7c00000>;
+			reg = <0x0400000 0x8000000>;
 		};
 	};
 };
