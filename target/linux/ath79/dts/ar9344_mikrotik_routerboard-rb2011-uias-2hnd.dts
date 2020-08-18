@@ -10,6 +10,10 @@
 	compatible = "mikrotik,routerboard-rb2011-uias-2hnd", "qca,ar9344";
 	model = "Mikrotik RouterBoard RB2011-UiAS-2HnD platform";
 
+	chosen {
+		bootargs = "lcd_ctrl=84 parts=1 boot_part_size=4194304 gpio=249403 HZ=375000000 mem=128M kmac=CC:2D:E0:62:70:D6 board=2011r5 board=2011r5 ver=3.41 hw_opt=00718004 boot=1 mlc=11 console=ttyS0,115200 ubi.mtd=2,2048 rootfstype=squashfs noinitrd";
+	};
+
 	aliases {
 		serial0 = &uart;
 	};
@@ -111,12 +115,12 @@
 
 		partition@40000 {
 			label = "kernel";
-			reg = <0x0040000 0x0400000>;
+			reg = <0x0040000 0x03c0000>;
 		};
 
 		partition@400000 {
 			label = "ubi";
-			reg = <0x0400000 0x8000000>;
+			reg = <0x0400000 0x7c00000>;
 		};
 	};
 };
