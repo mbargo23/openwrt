@@ -8,7 +8,7 @@
 
 / {
 	compatible = "mikrotik,routerboard-rb2011-uias-2hnd", "qca,ar9344";
-	model = "Mikrotik RouterBoard RB2011-UiAS-2HnD platform";
+	model = "Mikrotik RouterBoard RB2011UiAS-2HnD";
 
 	chosen {
 		bootargs = "lcd_ctrl=84 parts=1 boot_part_size=4194304 gpio=249403 HZ=375000000 mem=128M kmac=CC:2D:E0:62:70:D6 board=2011r5 board=2011r5 ver=3.41 hw_opt=00718004 boot=1 mlc=11 console=ttyS0,115200 ubi.mtd=2,2048 rootfstype=squashfs noinitrd";
@@ -132,19 +132,133 @@
 &eth0 {
 	status = "okay";
 
-	phy-handle = <&swphy0>;
+	phy-mode = "rgmii";
+	phy-handle = <&gswphy0>;
 
-	gmac-config {
-		device = <&gmac>;
-		switch-phy-swap = <1>;
-	};
 };
+
 
 &eth1 {
 	status = "okay";
 
-	compatible = "syscon", "simple-mfd";
+	phy-mode = "rgmii";
+	phy-handle = <&swphy0>;
+
+	gmac-config {
+		device = <&gmac>;
+		switch-phy-swap = <0>;
+	};
+
 };
+
+&mdio0 {
+        status = "okay";
+
+        phy-mask = <0>;
+
+        gswphy0: ethernet-phy@0 {
+		compatible = "qca,ar8327";
+                reg = <0>;
+		phy-mode = "rgmii";
+                qca,mib-poll-interval = <500>;
+                //reset-gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+
+                qca,ar8327-initvals = <
+			0x04 0x07600000 /* PORT0 PAD MODE CTRL */
+			0x08 0x01000000 /* PORT5 PAD MODE CTRL*/
+			0x0c 0x00000080 /* PORT6 PAD MODE CTRL */
+			/* 0x10 0x40000000 /* Power-on Strapping: 176-pin interface configuration */
+			0x10 0x81000080 /* POWER_ON_STRIP */
+			0x50 0xc437c437 /* LED Control Register 0 */
+			0x54 0xc337c337 /* LED Control Register 1 */
+			0x58 0x00000000 /* LED Control Register 2 */
+			0x5c 0x03ffff00 /* LED Control Register 3 */
+			0x7c 0x0000004e /* PORT0_STATUS */
+			0x94 0x0000004e /* PORT6 STATUS */
+			0xe0 0xc74164de /* SGMII_CTRL */
+			0xe4 0x000aa545 /* MAC_POWER_SEL */
+			>;
+		};
+
+};
+
+//&mdio0 {
+//	status = "okay";
+//
+//	phy_port1: phy@1 {
+//		reg = <0>;
+//	};
+//
+//	phy_port2: phy@2 {
+//		reg = <1>;
+//	};
+//
+//	phy_port3: phy@3 {
+//		reg = <2>;
+//	};
+//
+//	phy_port4: phy@4 {
+//		reg = <3>;
+//	};
+//
+//	phy_port5: phy@5 {
+//		reg = <4>;
+//	};
+//
+//	switch0@0 {
+//		compatible = "qca,qca8337";
+//		#address-cells = <1>;
+//		#size-cells = <0>;
+//
+//		reg = <0>;
+//
+//		ports {
+//			#address-cells = <1>;
+//			#size-cells = <0>;
+//			port@0 {
+//				reg = <0>;
+//				label = "cpu";
+//				ethernet = <&eth1>;
+//				phy-mode = "rgmii";
+//				qca,mib-poll-interval = <500>;
+//				fixed-link {
+//					speed = <1000>;
+//					full-duplex;
+//				};
+//			};
+//
+//			port@1 {
+//				reg = <1>;
+//				label = "wan";
+//				phy-handle = <&phy_port1>;
+//			};
+//
+//			port@2 {
+//				reg = <2>;
+//				label = "lan1";
+//				phy-handle = <&phy_port2>;
+//			};
+//
+//			port@3 {
+//				reg = <3>;
+//				label = "lan2";
+//				phy-handle = <&phy_port3>;
+//			};
+//
+//			port@4 {
+//				reg = <4>;
+//				label = "lan3";
+//				phy-handle = <&phy_port4>;
+//			};
+//
+//			port@5 {
+//				reg = <5>;
+//				label = "lan4";
+//				phy-handle = <&phy_port5>;
+//			};
+//		};
+//	};
+//};
 
 &wmac {
 	status = "okay";
